@@ -15,7 +15,6 @@ class Transfer
   end
 
   def execute_transaction
-    # return from method if it has already been called. is there a better way?
     if valid? && sender.balance > amount && self.status == "pending"
       sender.balance -= amount
       receiver.balance += amount
