@@ -16,14 +16,13 @@ class Transfer
 
   def execute_transaction
     # return from method if it has already been called. is there a better way?
-    return if self.status == "complete"
-
-    sender.balance -= amount
-    receiver.balance += amount
-    self.status = "complete"
-
-    #calls helper method with rejected message if valid? method evaluates to false
-    rejected if !valid?
+    if valid? && sender.balance > amount && self.status == "pending"
+      sender.balance -= amount
+      receiver.balance += amount
+      self.status = "complete"
+    else
+      rejected
+    end
   end
 
   def rejected
